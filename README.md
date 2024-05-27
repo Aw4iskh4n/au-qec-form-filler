@@ -50,14 +50,14 @@ You can also download and run the executable file directly without setting up th
 
 ### Download and Run the Executable
 
-1. Download the executable file from the [releases](https://github.com/yourusername/au-qec-form-filler/releases) page.
+1. Download the executable file from the [releases](https://github.com/Aw4iskh4n/au-qec-form-filler/releases) page.
 2. Run the executable file (`au_qec_form_filler.exe`).
 3. Enter your login credentials when prompted.
 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the MIT License. See the [LICENSE] file for more details.
 
 ## Contributing
 
@@ -65,7 +65,7 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## Contact
 
-For any inquiries or support, please contact [your email address].
+For any inquiries or support, please contact awais5001app@gmail.com.
 
 ---
 
