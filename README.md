@@ -51,7 +51,7 @@ You can also download and run the executable file directly without setting up th
 ### Download and Run the Executable
 
 1. Download the executable file from the [releases](https://github.com/Aw4iskh4n/au-qec-form-filler/releases) page.
-2. Run the executable file (`au_qec_form_filler.exe`).
+2. Run the executable file (`AutoQEC.exe`).
 3. Enter your login credentials when prompted.
 
 
