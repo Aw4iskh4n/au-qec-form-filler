@@ -40,7 +40,7 @@ AU QEC Form Filler is a Python script designed to automate the process of fillin
 
 1. Run the script:
     ```bash
-    python au_qec_form_filler.py
+    python a2mationr.py
     ```
 2. Enter your login credentials when prompted.
 
