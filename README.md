@@ -1,6 +1,6 @@
 # AU QEC Form Filler
 
-![Banner](screenshots/screenshot1.png)
+![Banner](screenshots/interface.png)
 
 ## Overview
 
