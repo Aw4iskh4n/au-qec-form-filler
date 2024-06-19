@@ -56,7 +56,7 @@ def fill_form(session, url, form_name, dropdown_name, prefix, comments=None):
     subjects = get_subjects(soup, dropdown_name)
     
     if not subjects:
-        console.print(f"[ ⭐ ] {form_name} already filled", style="bold yellow")
+        console.print(f"[ 🌟 ] {form_name} already filled", style="bold yellow")
         return
     
     hidden_fields = update_hidden_fields(soup)
