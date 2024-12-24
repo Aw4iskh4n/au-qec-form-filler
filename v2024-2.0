@@ -138,9 +138,9 @@ def select_subject_and_submit(session, base_url, subject_value, viewstate, event
 
     response = session.post(base_url + 'p1.aspx', data=payload, headers=headers)
     if "successfully" in response.text.lower():
-        console.print(f"    [-] Submitted form for {subject}", style="bold #8a8a8a")
+        console.print(f"      [-] Submitted for {subject}", style="bold #8a8a8a")
     else:
-        console.print(f"    [-] Failed to submi for {subject}", style="red")
+        console.print(f"      [-] Failed to submit for {subject}", style="red")
     
     return response
 
@@ -233,7 +233,7 @@ else:
         }
 
         submit_response = session.post(teacher_evaluation_url, data=form_payload)
-        console.print(f"    [-] Submitted  for {teacher.text}", style="green")
+        console.print(f"      [-] Submitted for {teacher.text}", style="green")
 
     console.print("[ - ]  Teacher evaluations proforma filled successfuly.", style="bold green")
 
@@ -297,7 +297,7 @@ else:
         }
 
         submit_response = session.post(online_learning_feedback_url, data=form_payload)
-        console.print(f"    [-] Submitted for {subject.text}", style="green")
+        console.print(f"      [-] Submitted for {subject.text}", style="green")
 
     console.print("[-] Online learning feedback proformas filled successfully.", style="bold green")
 
