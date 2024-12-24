@@ -82,7 +82,7 @@ while not login_success:
     login_response = session.post(login_url, data=get_login_payload(soup, username, password))
 
     if "logout" in login_response.text.lower():
-        console.print("\n[ - ] Login successful", style="bold green")
+        console.print("\n[ - ] Login successful\n\n", style="bold green")
         login_success = True
     else:
         console.print("\n[ X ] Login failed. Please try again.\n", style="bold red")
@@ -168,7 +168,7 @@ else:
         soup = BeautifulSoup(response.content, 'html.parser')
         viewstate, eventvalidation, viewstategenerator = update_hidden_fields(soup)
 
-    console.print("[ - ] Subjects evaluation proforma filled Successfully..", style="green")
+    console.print("[ - ] Subjects evaluation proforma filled Successfully.\n", style="green")
 
 
 # Navigate to the Teacher Evaluation Form
@@ -233,9 +233,9 @@ else:
         }
 
         submit_response = session.post(teacher_evaluation_url, data=form_payload)
-        console.print(f"      [-] Submitted for {teacher.text}", style="green")
+        console.print(f"      [-] Submitted for {teacher.text}", style="bold #8a8a8a")
 
-    console.print("[ - ]  Teacher evaluations proforma filled successfuly.", style="bold green")
+    console.print("[ - ] Teacher evaluations proforma filled successfuly.\n", style="bold green")
 
 # Navigate to the Online Learning Feedback Proforma
 response = session.get(online_learning_feedback_url)
@@ -297,9 +297,9 @@ else:
         }
 
         submit_response = session.post(online_learning_feedback_url, data=form_payload)
-        console.print(f"      [-] Submitted for {subject.text}", style="green")
+        console.print(f"      [-] Submitted for {subject.text}", style="bold #8a8a8a")
 
-    console.print("[-] Online learning feedback proformas filled successfully.", style="bold green")
+    console.print("[-] Online learning feedback proformas filled successfully.\n\n", style="bold green")
 
 # Wait for user input before closing
 input("\nPress Enter to close the program...")
