@@ -73,66 +73,88 @@ else:
 
 # Function to update hidden fields
 def update_hidden_fields(soup):
-    return (soup.find('input', {'name': '__VIEWSTATE'})['value'],
-            soup.find('input', {'name': '__EVENTVALIDATION'})['value'],
-            soup.find('input', {'name': '__VIEWSTATEGENERATOR'})['value'])
+    """
+    Extract hidden fields from the page, returning None for missing fields.
+    """
+    try:
+        viewstate = soup.find('input', {'name': '__VIEWSTATE'})
+        eventvalidation = soup.find('input', {'name': '__EVENTVALIDATION'})
+        viewstategenerator = soup.find('input', {'name': '__VIEWSTATEGENERATOR'})
 
-# Navigate to the first proforma
-response = session.get(first_performa_url)
-soup = BeautifulSoup(response.content, 'html.parser')
+        return (
+            viewstate['value'] if viewstate else None,
+            eventvalidation['value'] if eventvalidation else None,
+            viewstategenerator['value'] if viewstategenerator else None,
+        )
+    except Exception as e:
+        print(f"Error extracting hidden fields: {e}")
+        return None, None, None
 
-# Find the subjects dropdown and get the list of subjects
-subjects_dropdown = soup.find('select', {'name': 'ctl00$ContentPlaceHolder2$cmb_courses'})
-subjects = subjects_dropdown.find_all('option')[1:]  # Skipping the first option which is the placeholder
 
-# Check if there are no subjects available
+def select_subject_and_submit(session, base_url, subject_value, viewstate, eventvalidation, viewstategenerator):
+    """
+    Select a subject and submit the form.
+    """
+    payload = {
+        '__EVENTTARGET': 'ctl00$ContentPlaceHolder2$cmb_courses',
+        '__EVENTARGUMENT': '',
+        '__VIEWSTATE': viewstate,
+        '__VIEWSTATEGENERATOR': viewstategenerator,
+        '__EVENTVALIDATION': eventvalidation,
+        'ctl00$ContentPlaceHolder2$cmb_courses': subject_value,
+        'ctl00$ContentPlaceHolder2$q1': 'A',  # Example response
+        'ctl00$ContentPlaceHolder2$q2': 'A',
+        'ctl00$ContentPlaceHolder2$q3': 'A',
+        'ctl00$ContentPlaceHolder2$q4': 'A',
+        'ctl00$ContentPlaceHolder2$q5': 'A',
+        'ctl00$ContentPlaceHolder2$q6': 'A',
+        'ctl00$ContentPlaceHolder2$q7': 'A',
+        'ctl00$ContentPlaceHolder2$q8': 'A',
+        'ctl00$ContentPlaceHolder2$q9': 'A',
+        'ctl00$ContentPlaceHolder2$q10': 'A',
+        'ctl00$ContentPlaceHolder2$q11': 'A',
+        'ctl00$ContentPlaceHolder2$q12': 'A',
+        'ctl00$ContentPlaceHolder2$btnSave': 'Submit Proforma',
+    }
+
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Referer': base_url + 'p1.aspx',
+    }
+
+    response = session.post(base_url + 'p1.aspx', data=payload, headers=headers)
+    if "successfully" in response.text.lower():
+        console.print(f"[ ✔ ] Form submitted for subject {subject_value}", style="green")
+    else:
+        console.print(f"[ ✘ ] Failed to submit form for subject {subject_value}", style="red")
+    
+    return response
+
+# Get first performa page
+performa_page = session.get(first_performa_url)
+performa_soup = BeautifulSoup(performa_page.content, 'html.parser')
+viewstate, eventvalidation, viewstategenerator = update_hidden_fields(performa_soup)
+
+# Get subjects
+subjects_dropdown = performa_soup.find('select', {'name': 'ctl00$ContentPlaceHolder2$cmb_courses'})
+subjects = subjects_dropdown.find_all('option')[1:]  # Skip the placeholder
+
 if not subjects:
-    console.print("[ ✔  ] Courses QEC form already filled", style="bold yellow")
+    console.print("[ ✔ ] No subjects left to evaluate.", style="yellow")
 else:
-    # Iterate over each subject and fill out the form
     for subject in subjects:
         subject_value = subject['value']
+        console.print(f"[ * ] Processing subject: {subject.text}", style="blue")
 
-        # Select the subject
-        payload = {
-            '__EVENTTARGET': 'ctl00$ContentPlaceHolder2$cmb_courses',
-            '__EVENTARGUMENT': '',
-            '__VIEWSTATE': viewstate,
-            '__VIEWSTATEGENERATOR': viewstategenerator,
-            '__EVENTVALIDATION': eventvalidation,
-            'ctl00$ContentPlaceHolder2$cmb_courses': subject_value,
-        }
+        response = select_subject_and_submit(
+            session, base_url, subject_value, viewstate, eventvalidation, viewstategenerator
+        )
 
-        response = session.post(first_performa_url, data=payload)
+        # Update hidden fields for subsequent requests
         soup = BeautifulSoup(response.content, 'html.parser')
-
-        # Update hidden form fields after selecting the subject
         viewstate, eventvalidation, viewstategenerator = update_hidden_fields(soup)
 
-        # Prepare the payload for submitting the proforma
-        form_payload = {
-            '__VIEWSTATE': viewstate,
-            '__VIEWSTATEGENERATOR': viewstategenerator,
-            '__EVENTVALIDATION': eventvalidation,
-            'ctl00$ContentPlaceHolder2$q1': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q2': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q3': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q4': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q5': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q6': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q7': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q8': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q9': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q10': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q11': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$q12': 'A',  # Example response
-            'ctl00$ContentPlaceHolder2$btnSave': 'Submit Proforma',
-        }
-
-        submit_response = session.post(first_performa_url, data=form_payload)
-        print(f"[*] Submitted proforma for subject {subject.text}")
-
-    console.print("[ ✔  ] All subjects processed.", style="bold green")
+console.print("[ ✔ ] All subjects processed.", style="green")
 
 # Navigate to the Teacher Evaluation Form
 response = session.get(teacher_evaluation_url)
