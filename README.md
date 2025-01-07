@@ -6,6 +6,8 @@
 
 AU QEC Form Filler is a Python script designed to automate the process of filling out various forms on the AU (Air University) QEC (Quality Enhancement Cell) portal. This tool simplifies the task of completing Course QEC forms, Teacher Evaluation forms, and Online Learning Feedback forms.
 
+`Note:` Version 2.0 is currently compatible only with the Windows operating system. A Linux-compatible version will be released soon.
+
 ## Features
 
 - Automated login to the AU QEC portal.
