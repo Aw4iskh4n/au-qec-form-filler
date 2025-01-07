@@ -16,6 +16,16 @@ AU QEC Form Filler is a Python script designed to automate the process of fillin
 - Submits Online Learning Feedback forms for all available courses.
 - Rich terminal output for better user experience.
 
+## Executable
+
+You can also download and run the executable file directly without setting up the Python environment. 
+
+### Download and Run the Executable
+
+1. Download the latest executable file from the [releases](https://github.com/Aw4iskh4n/au-qec-form-filler/releases) page.
+2. Run the executable file (`QEC.exe`).
+3. Enter your login credentials when prompted.
+
 ## Requirements
 
 - Python 3.6 or higher
@@ -47,17 +57,6 @@ AU QEC Form Filler is a Python script designed to automate the process of fillin
 2. Enter your login credentials when prompted.
 
 ![Banner](screenshots/filled.png)
-
-## Executable
-
-You can also download and run the executable file directly without setting up the Python environment. 
-
-### Download and Run the Executable
-
-1. Download the latest executable file from the [releases](https://github.com/Aw4iskh4n/au-qec-form-filler/releases) page.
-2. Run the executable file (`QEC.exe`).
-3. Enter your login credentials when prompted.
-
 
 ## License
 
