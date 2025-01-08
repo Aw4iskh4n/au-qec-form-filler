@@ -60,7 +60,7 @@ You can also download and run the executable file directly without setting up th
 
 ## License
 
-This project is licensed under the MIT License.
+This project is [licensed](https://github.com/Aw4iskh4n/au-qec-form-filler/blob/main/LICIENSE).
 
 ## Contributing
 
